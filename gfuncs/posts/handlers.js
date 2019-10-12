@@ -35,3 +35,7 @@ exports.post = (req,res) => {
             return res.status(404).send({ error: 'unable to store', err });
     });
 }
+
+exports.get = (req,res) => {
+    return "not implemented yet";
+}
