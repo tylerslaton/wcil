@@ -1,0 +1,14 @@
+{
+  "name": "wci",
+  "version": "0.0.1",
+  "description": "Base for app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/firestore": "2.4.0"
+  }
+}
