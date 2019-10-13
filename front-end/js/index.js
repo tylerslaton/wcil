@@ -33,20 +33,22 @@ function initMap() {
         }, 3000);
     });
 }
-var locations = [
-    { lat: 35.228, lng: -80.340 },
-    { lat: 35.008, lng: -80.740 },
-    { lat: 35.328, lng: -80.140 },
-    { lat: 35.528, lng: -80.930 },
-    { lat: 35.828, lng: -80.420 },
-    { lat: 35.728, lng: -80.590 },
-    { lat: 35.828, lng: -80.210 },
-    { lat: 35.428, lng: -80.350 },
-    { lat: 35.328, lng: -80.790 },
-    { lat: 35.128, lng: -80.120 },
-    { lat: 35.028, lng: -80.790 },
-    { lat: 35.258, lng: -80.080 },
-    { lat: 35.348, lng: -80.160 },
-    { lat: 35.628, lng: -80.820 },
-]
 
+async function postData(data) {
+    const url = "https://us-central1-hopeful-depot-255718.cloudfunctions.net/posts";
+    // Default options are marked with *
+    const response = await fetch("https://us-central1-hopeful-depot-255718.cloudfunctions.net/posts", {
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        method: 'POST',
+        body: JSON.stringify({
+            lattitude: data.lattitude,
+            longitude: data.longitude,
+            city: data.city,
+            salary: data.salary,
+            happiness: data.happiness,
+            comfort: data.comfort,
+        })
+    });
+    console.log(response)
+    return await response.json(); // parses JSON response into native JavaScript objects
+}
