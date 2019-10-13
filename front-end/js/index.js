@@ -43,10 +43,11 @@ async function initMap(newLocations = null) {
 
     //Set a logical default
     if (newLocations == null) {
-        locations = await initMarkers(" Charlotte", "$30,001 - $50,000");
+        locations = await initMarkers("Charlotte", "$30,001 - $50,000");
     } else {
         locations = newLocations;
-    }
+    } 
+    
 
     var markers = locations.map(function (location, i) {
         return new google.maps.Marker({
@@ -308,19 +309,17 @@ async function initMarkers(city, salary) {
 async function updateMarkers(urlParams) {
     var query = URL + urlParams
 
-    console.log(query);
-
     var rawCoords = await fetch(query);
     rawCoords = await rawCoords.json();
 
     console.log(rawCoords)
 
-    locations = refineCoords(rawCoords)
-    initMap();
+    await initMap(refineCoords(rawCoords.results));
 }
 
 function refineCoords(rawCoords){
     const refinedCoords = [];
+    console.log(rawCoords)
     for (coord in rawCoords) {
 
         refinedCoords.push(
@@ -330,6 +329,7 @@ function refineCoords(rawCoords){
             }
         )
     }
+    console.log(refinedCoords)
     return refinedCoords;
 }
 
@@ -338,6 +338,5 @@ $(function () {
         event.preventDefault(); // This line prevents the normal behaviour of the submit button
         var queryString = $(this).serialize(); // This will generate a query string like so : "val=1223&val2=434334&val3=4343"
         updateMarkers("/?" + queryString)
-
     })
 })
