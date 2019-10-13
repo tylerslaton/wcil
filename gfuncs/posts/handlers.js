@@ -8,15 +8,11 @@ const firestore = new Firestore({
 });
 
 exports.post = (req,res) => {
-    //Allow cors
-    res.set('Access-Control-Allow-Origin', '*');
-    res.set('Access-Control-Allow-Methods', 'POST');
-
     // store/insert a new document
     const data = (req.body) || {};
 
     // Only allow valid input values
-    const lat = data.lattitude;
+    const lat = data.latitude;
     const long = data.longitude;
     const city = data.city;
     const salary = data.salary;
@@ -40,6 +36,6 @@ exports.post = (req,res) => {
     });
 }
 
-exports.get = (req,res) => {
+exports.get = (req,res) => {    
     return res.status(200).send({test:"megatest"});
 }
