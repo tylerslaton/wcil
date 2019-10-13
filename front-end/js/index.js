@@ -5,7 +5,7 @@ var latG;
 var lngG;
 var cityStr;
 
-function initMap() {
+async function initMap() {
 
     var geocoder = new google.maps.Geocoder;
 
@@ -37,6 +37,11 @@ function initMap() {
     // Note: The code uses the JavaScript Array.prototype.map() method to
     // create an array of markers based on a given "locations" array.
     // The map() method here has nothing to do with the Google Maps API.
+
+    const locations = await initMarkers(" Kingsport", "$50,001 - $80,000")
+
+    console.log(locations)
+
     var markers = locations.map(function (location, i) {
         return new google.maps.Marker({
             position: location,
@@ -66,6 +71,7 @@ function initMap() {
             geocodeLatLng(geocoder, map);
 
             var formString =
+                '<h2 id="form-header">What was your experience here?</h2><hr>' +
                 '<div class="ml-3 mr-3" id="form-content">' +
                 '<form onsubmit="return markerFormOut()" >' +
                 '<p><b>Salary</b></p>' +
@@ -252,7 +258,8 @@ function drop() {
     }
 }
 
-var locations = [
+
+/*var locations = [
     { lat: 35.228, lng: -80.340 },
     { lat: 35.008, lng: -80.740 },
     { lat: 35.328, lng: -80.140 },
@@ -267,7 +274,7 @@ var locations = [
     { lat: 35.258, lng: -80.080 },
     { lat: 35.348, lng: -80.160 },
     { lat: 35.628, lng: -80.820 },
-]
+]*/
 
 async function postData(data) {
     // Default options are marked with *
@@ -289,11 +296,28 @@ async function postData(data) {
 
 //TODO: Validate responses
 async function initMarkers(city, salary) {
+    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     // TODO: MAKE FREAKING SURE TO SANITIZE ON BACKEND
     const response = await fetch(URL + "?city=" + city + "&salary=" + salary, {
         method: 'GET',
     });
-    return await response.json(); // parses JSON response into native JavaScript objects
+    var rawCoords = await response.json(); // parses JSON response into native JavaScript objects
+    rawCoords = rawCoords.results;
+
+    console.log(rawCoords)
+
+    const refinedCoords = [];
+    for (coord in rawCoords) {
+        
+        refinedCoords.push(
+            {
+                lat: parseFloat(parseFloat(rawCoords[coord].lat).toFixed(3)),
+                lng: parseFloat(parseFloat(rawCoords[coord].lng).toFixed(3))
+            }
+        )
+    }
+
+    return refinedCoords;
 }
 
 //TODO: Validate responses
