@@ -17,12 +17,19 @@
 
 <body>
   <!-- Start Here -->
-
   <div id="map"></div>
+  <div id="infowindow-content">
+    <img id="place-icon" src="" height="16" width="16">
+    <span id="place-name" class="title"></span>
+    <br>
+    <span id="place-address"></span>
+  </div>
+
+
 
 
   <script defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU7lcPmlrwwuXKMAYescjsOjCR46KrLVU&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU7lcPmlrwwuXKMAYescjsOjCR46KrLVU&callback=initMap&libraries=places">
     </script>
   <script src="markerclusterer.js"></script>
   </script>

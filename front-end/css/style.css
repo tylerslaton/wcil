@@ -7,3 +7,15 @@ html, body {
     margin: 0;
     padding: 0;
 }
+
+#infowindow-content {
+    display: none;
+}
+
+#map #infowindow-content {
+    display: inline;
+}
+
+.gm-style-iw-d {
+    margin: 5px;
+}
