@@ -37,5 +37,50 @@ exports.post = (req,res) => {
 }
 
 exports.get = (req,res) => {
-    return "not implemented yet";
+
+  const data = (req.body) || {};
+
+  // Only allow valid input values
+  const city = data.city;
+  const salary = data.salary;
+  const happiness = data.happiness;
+  const comfort = data.comfort;
+
+  // If no data is submitted, don't bother accessing DB
+  if (!data) {
+      return res.status(200).send();
+  }
+
+  let n = firestore.collection(COLLECTION_NAME)
+
+  if(city !== null){
+    n = n.where('city', '==', city);
+  }
+  if(salary !== null){
+    n = n.where('salary', '==', salary);
+  }
+  if(happiness !== null){
+    n = n.where('', '==', city);
+  }
+  if(comfort !== null){
+    n = n.where('city', '==', city);
+  }
+  n.get()
+    .then(snapshot => {
+      if(snapshot.empty) {
+      console.log("No matching documents.");
+      return res.status(200).send(null);
+    }
+
+    snapshot.forEach(doc => {
+      console.log(doc.id, '=>', doc.data());
+      return res.status(200).send(doc);
+    });
+  })
+  .catch(err => {
+    console.log("Error getting documents", err);
+    return res.status(404).send({error: "unable to match", err});
+  });
+
+
 }
