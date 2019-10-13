@@ -4,6 +4,9 @@ var color;
 var latG;
 var lngG;
 var cityStr;
+var gmarkers = {};
+var windows = {};
+var id;
 
 async function initMap() {
 
@@ -130,16 +133,6 @@ async function initMap() {
                 content: formString,
             });
             infoWindow.open(map, marker);
-            // if (marker.open()) {
-            //     console.log("TESt");
-            // }
-
-            // if (infoWindow.closeclick()) {
-            //     console.log("TESTCLOSE");
-            // }
-            // closeBtn.addEventListener('click', function (e) {
-            //     console.log("closed");
-            // });
 
             //Create a marker and placed it on the map.
             var marker = new google.maps.Marker({
@@ -147,6 +140,9 @@ async function initMap() {
                 map: map,
                 animation: google.maps.Animation.DROP
             });
+
+            id = marker.__gm_id
+            markers[id] = marker;
 
             //Attach click event handler to the marker.
             google.maps.event.addListener(marker, "click", function (e) {
@@ -157,9 +153,24 @@ async function initMap() {
                 contentWindow.open(map, marker);
             });
         }
+
+        //Closes info window when clicking on map
+        map.addListener('click', function () {
+            if (infoWindow) infoWindow.close();
+        });
+
+        infoWindow.addListener('closeclick', function () {
+            google.maps.event.addListener(marker, "click", function (point) { id = this.__gm_id; delMarker(id) });
+            console.log("DELTEE")
+        })
         thisIsAPlace = false;
     });
 
+}
+
+var delMarker = function (id) {
+    marker = markers[id];
+    marker.setMap(null);
 }
 
 function markerFormOut() {
@@ -221,7 +232,6 @@ ClickEventHandler.prototype.handleClick = function (event) {
     console.log('You clicked on: ' + event.latLng);
     // If the event has a placeId, use it.
     if (event.placeId) {
-
         thisIsAPlace = true;
 
         // Calling e.stop() on the event prevents the default info window from
@@ -258,24 +268,6 @@ function drop() {
     }
 }
 
-
-/*var locations = [
-    { lat: 35.228, lng: -80.340 },
-    { lat: 35.008, lng: -80.740 },
-    { lat: 35.328, lng: -80.140 },
-    { lat: 35.528, lng: -80.930 },
-    { lat: 35.828, lng: -80.420 },
-    { lat: 35.728, lng: -80.590 },
-    { lat: 35.828, lng: -80.210 },
-    { lat: 35.428, lng: -80.350 },
-    { lat: 35.328, lng: -80.790 },
-    { lat: 35.128, lng: -80.120 },
-    { lat: 35.028, lng: -80.790 },
-    { lat: 35.258, lng: -80.080 },
-    { lat: 35.348, lng: -80.160 },
-    { lat: 35.628, lng: -80.820 },
-]*/
-
 async function postData(data) {
     // Default options are marked with *
     const response = await fetch(URL, {
@@ -308,7 +300,7 @@ async function initMarkers(city, salary) {
 
     const refinedCoords = [];
     for (coord in rawCoords) {
-        
+
         refinedCoords.push(
             {
                 lat: parseFloat(parseFloat(rawCoords[coord].lat).toFixed(3)),
