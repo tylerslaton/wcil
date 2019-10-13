@@ -12,7 +12,7 @@ exports.post = (req,res) => {
     const data = (req.body) || {};
 
     // Only allow valid input values
-    const lat = data.lattitude;
+    const lat = data.latitude;
     const long = data.longitude;
     const city = data.city;
     const salary = data.salary;
