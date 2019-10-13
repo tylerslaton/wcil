@@ -63,8 +63,7 @@ function initMap() {
 
             latG = e.latLng.lat();
             lngG = e.latLng.lng();
-            setTimeout(function () { alert("Hello"); }, 3000);
-            cityStr = geocodeLatLng(geocoder, map);
+            geocodeLatLng(geocoder, map);
 
             var formString =
                 '<div class="ml-3 mr-3" id="form-content">' +
@@ -111,7 +110,6 @@ function initMap() {
                 '<br/>' +
                 '<input type="hidden" id="latV" name="lat" value=' + e.latLng.lat() + '>' +
                 '<input type="hidden" id="lngV" name="lng" value=' + e.latLng.lng() + '>' +
-                '<input type="hidden" id="cityV" name="city" value=' + cityStr + '>' +
                 '<div class="text-center"><input type="submit" id="submitMarkerForm" class="btn btn-primary center-block mt-3 mb-2"></div>' +
                 '</div>' +
                 '</form>'
@@ -162,7 +160,6 @@ function markerFormOut() {
 
     var lat = document.getElementById("latV").value;
     var lng = document.getElementById("lngV").value;
-    var city = document.getElementById("cityV").value;
     var salaries = $('#salaries input:checked').val();
     var happies = $('#happies input:checked').val();
     var comfies = $('#comfies input:checked').val();
@@ -173,7 +170,6 @@ function markerFormOut() {
     console.log(happies);
     console.log(comfies);
 
-    console.log("AAAA: " + city);
     var markerFromForm = { latitude: lat, longitude: lng, city: cityStr, salary: salaries, happiness: happies, comfort: comfies };
 
     postData(markerFromForm);
@@ -193,7 +189,7 @@ function geocodeLatLng(geocoder, map) {
                 var addressStr = results[0].formatted_address;
                 var splits = addressStr.split(',', 3);
                 word = splits[1]
-                console.log(word);
+                cityStr = word;
             } else {
                 window.alert('No results found');
             }
@@ -201,8 +197,6 @@ function geocodeLatLng(geocoder, map) {
             window.alert('Geocoder failed due to: ' + status);
         }
     });
-
-    return word;
 }
 
 var ClickEventHandler = function (map, origin) {
