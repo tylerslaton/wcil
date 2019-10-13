@@ -126,9 +126,7 @@ function initMap() {
                 '<div class="text-center"><button onclick="submittedMarkerFxn()" type="submit" id="submitMarkerForm" class="btn btn-primary center-block mt-3 mb-2">Submit</button></div>' +
                 '</div>'
 
-            var today = new Date();
-            var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-            var markerFromForm = { latitude: e.latLng.lat(), longitude: e.latLng.lng(), city: "Charlotte", salary: "null", happiness: "5", comfort: "3", created: date };
+            var markerFromForm = { latitude: e.latLng.lat(), longitude: e.latLng.lng(), city: "Charlotte", salary: "null", happiness: "5", comfort: "3"};
 
             postData(markerFromForm);
 
@@ -271,15 +269,14 @@ async function initMarkers(city, salary) {
 }
 
 //TODO: Validate responses
-async function updateMarkers(city = null, salary = null, happiness = null, comfort = null) {
-    const response = await fetch(
-        URL +
-        "?city=" + city +
-        "&salary=" + salary +
-        "&happiness=" + happiness +
-        "&comfort=" + comfort, {
-            method: 'GET',
-        }
-    );
+async function updateMarkers(data) {
+    var query = URL + "?"
+    for(var key in data){
+        query += "&" + key + "=" + data[key];
+    }
+
+    console.log(query);
+
+    const response = await fetch(query);
     return await response.json();
 }
