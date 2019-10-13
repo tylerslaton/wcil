@@ -43,7 +43,7 @@ async function postData(data) {
         headers: { "Content-Type": "application/json; charset=utf-8" },
         method: 'POST',
         body: JSON.stringify({
-            lattitude: data.lattitude,
+            latitude: data.latitude,
             longitude: data.longitude,
             city: data.city,
             salary: data.salary,
