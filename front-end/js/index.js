@@ -3,6 +3,7 @@ const URL = "https://us-central1-hopeful-depot-255718.cloudfunctions.net/posts"
 var color;
 var latG;
 var lngG;
+var cityStr;
 
 function initMap() {
 
@@ -60,6 +61,11 @@ function initMap() {
                 map: map
             });
 
+            latG = e.latLng.lat();
+            lngG = e.latLng.lng();
+            setTimeout(function () { alert("Hello"); }, 3000);
+            cityStr = geocodeLatLng(geocoder, map);
+
             var formString =
                 '<div class="ml-3 mr-3" id="form-content">' +
                 '<form onsubmit="return markerFormOut()" >' +
@@ -103,21 +109,9 @@ function initMap() {
                 '<label class="form-check-label mr-2" for="comfy">5</label>' +
                 '</div>' +
                 '<br/>' +
-<<<<<<< Updated upstream
-                '<div class="text-center"><button onclick="submittedMarkerFxn()" type="submit" id="submitMarkerForm" class="btn btn-primary center-block mt-3 mb-2">Submit</button></div>' +
-                '</div>'
-
-            var markerFromForm = { latitude: e.latLng.lat(), longitude: e.latLng.lng(), city: "Charlotte", salary: "null", happiness: "5", comfort: "3"};
-
-            postData(markerFromForm);
-
-            //e.latLng.lat() = latitude
-            //e.latLng.lng() = longitude
-
-=======
                 '<input type="hidden" id="latV" name="lat" value=' + e.latLng.lat() + '>' +
                 '<input type="hidden" id="lngV" name="lng" value=' + e.latLng.lng() + '>' +
-                '<input type="hidden" id="city" name="city" value="Charlotte">' +
+                '<input type="hidden" id="cityV" name="city" value=' + cityStr + '>' +
                 '<div class="text-center"><input type="submit" id="submitMarkerForm" class="btn btn-primary center-block mt-3 mb-2"></div>' +
                 '</div>' +
                 '</form>'
@@ -126,12 +120,8 @@ function initMap() {
             } else if (color == 2) {
                 console.log("blue");
             }
-            latG = e.latLng.lat();
-            lngG = e.latLng.lng();
-            geocodeLatLng(geocoder, map);
 
-            console.log("COLOR: " + color);
->>>>>>> Stashed changes
+
             var infoWindow = new google.maps.InfoWindow({
                 content: formString,
             });
@@ -146,8 +136,6 @@ function initMap() {
             // closeBtn.addEventListener('click', function (e) {
             //     console.log("closed");
             // });
-
-
 
             //Create a marker and placed it on the map.
             var marker = new google.maps.Marker({
@@ -174,19 +162,19 @@ function markerFormOut() {
 
     var lat = document.getElementById("latV").value;
     var lng = document.getElementById("lngV").value;
-    var city = document.getElementById("city").value;
+    var city = document.getElementById("cityV").value;
     var salaries = $('#salaries input:checked').val();
     var happies = $('#happies input:checked').val();
     var comfies = $('#comfies input:checked').val();
 
     console.log(lat);
     console.log(lng);
-    console.log(city);
     console.log(salaries);
     console.log(happies);
     console.log(comfies);
 
-    var markerFromForm = { latitude: lat, longitude: lng, city: "Charlotte", salary: salaries, happiness: happies, comfort: comfies };
+    console.log("AAAA: " + city);
+    var markerFromForm = { latitude: lat, longitude: lng, city: cityStr, salary: salaries, happiness: happies, comfort: comfies };
 
     postData(markerFromForm);
 
@@ -198,12 +186,14 @@ function markerFormOut() {
 
 function geocodeLatLng(geocoder, map) {
     var latlng = { lat: latG, lng: lngG };
-    console.log("HI");
+    var word = "";
     geocoder.geocode({ 'location': latlng }, function (results, status) {
         if (status === 'OK') {
             if (results[0]) {
-                map.setZoom(11);
-                console.log("TRESATA>? " + results[0].formatted_address);
+                var addressStr = results[0].formatted_address;
+                var splits = addressStr.split(',', 3);
+                word = splits[1]
+                console.log(word);
             } else {
                 window.alert('No results found');
             }
@@ -211,6 +201,8 @@ function geocodeLatLng(geocoder, map) {
             window.alert('Geocoder failed due to: ' + status);
         }
     });
+
+    return word;
 }
 
 var ClickEventHandler = function (map, origin) {
@@ -313,7 +305,7 @@ async function initMarkers(city, salary) {
 //TODO: Validate responses
 async function updateMarkers(data) {
     var query = URL + "?"
-    for(var key in data){
+    for (var key in data) {
         query += "&" + key + "=" + data[key];
     }
 
