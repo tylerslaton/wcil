@@ -59,45 +59,78 @@ function initMap() {
 
             var formString =
                 '<div class="ml-3 mr-3" id="form-content">' +
-                '<form action="" method="post">' +
+                '<p><b>Salary</b></p>' +
                 '<div class="form-check form-check-inline">' +
-                '<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">' +
-                '<label class="form-check-label" for="inlineRadio1">1</label>' +
+                '<input class="form-check-input" type="radio" name="income" value="$0 - $30,000">' +
+                '<label class="form-check-label" for="income">$0 - $30,000</label>' +
                 '</div>' +
                 '<div class="form-check form-check-inline">' +
-                '<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">' +
-                '<label class="form-check-label" for="inlineRadio2">2</label>' +
+                '<input class="form-check-input" type="radio" name="income"  value="$30,001 - $50,000">' +
+                '<label class="form-check-label" for="income">$30,001 - $50,000</label>' +
                 '</div>' +
                 '<div class="form-check form-check-inline">' +
-                '<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled>' +
-                '<label class="form-check-label" for="inlineRadio3">3 (disabled)</label>' +
-                '</div><br/>' +
-                '<div class="form-check form-check-inline">' +
-                '<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">' +
-                '<label class="form-check-label" for="inlineRadio1">1</label>' +
+                '<input class="form-check-input" type="radio" name="income" value="$50,001 - $80,000" >' +
+                '<label class="form-check-label" for="income">$50,001 - $80,000</label>' +
                 '</div>' +
                 '<div class="form-check form-check-inline">' +
-                '<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">' +
-                '<label class="form-check-label" for="inlineRadio2">2</label>' +
+                '<input class="form-check-input" type="radio" name="income" value="$80,001 - $100,000" >' +
+                '<label class="form-check-label" for="income">$80,001 - $100,000</label>' +
                 '</div>' +
                 '<div class="form-check form-check-inline">' +
-                '<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled>' +
-                '<label class="form-check-label" for="inlineRadio3">3 (disabled)</label>' +
-                '</div><br/>' +
+                '<input class="form-check-input" type="radio" name="income" value="$100,001+" >' +
+                '<label class="form-check-label" for="income">$100,001+</label>' +
+                '</div>' +
+                '<p class="mt-3"><b>Happiness</b></p>' +
                 '<div class="form-check form-check-inline">' +
-                '<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">' +
-                '<label class="form-check-label" for="inlineRadio1">1</label>' +
+                '<input class="form-check-input" type="radio" name="happiness" value="1">' +
+                '<label class="form-check-label" for="happiness">1</label>' +
                 '</div>' +
                 '<div class="form-check form-check-inline">' +
-                '<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">' +
-                '<label class="form-check-label" for="inlineRadio2">2</label>' +
+                '<input class="form-check-input" type="radio" name="happiness"  value="2">' +
+                '<label class="form-check-label" for="happiness">2</label>' +
                 '</div>' +
                 '<div class="form-check form-check-inline">' +
-                '<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled>' +
-                '<label class="form-check-label" for="inlineRadio3">3 (disabled)</label>' +
-                '</div><br/>' +
-                '</form>' +
+                '<input class="form-check-input" type="radio" name="happiness" value="3" >' +
+                '<label class="form-check-label" for="happiness">3</label>' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input class="form-check-input" type="radio" name="happiness" value="4" >' +
+                '<label class="form-check-label" for="happiness">4</label>' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input class="form-check-input" type="radio" name="happiness" value="5" >' +
+                '<label class="form-check-label" for="happiness">5</label>' +
+                '</div>' +
+                '<p class="mt-3"><b>Comfiness</b></p>' +
+                '<div class="form-check form-check-inline">' +
+                '<input class="form-check-input" type="radio" name="comfy" value="1">' +
+                '<label class="form-check-label" for="comfy">1</label>' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input class="form-check-input" type="radio" name="comfy" value="2">' +
+                '<label class="form-check-label" for="comfy">2</label>' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input class="form-check-input" type="radio" name="comfy" value="3" >' +
+                '<label class="form-check-label" for="comfy">3</label>' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input class="form-check-input" type="radio" name="comfy" value="4" >' +
+                '<label class="form-check-label" for="comfy">4</label>' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input class="form-check-input" type="radio" name="comfy" value="5" >' +
+                '<label class="form-check-label" for="comfy">5</label>' +
+                '</div>' +
+                '<br/>' +
+                '<div class="text-center"><button onclick="submittedMarkerFxn()" type="submit" id="submitMarkerForm" class="btn btn-primary center-block mt-3 mb-2">Submit</button></div>' +
                 '</div>'
+
+            var today = new Date();
+            var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            var markerFromForm = { latitude: e.latLng.lat(), longitude: e.latLng.lng(), city: "Charlotte", salary: "null", happiness: "5", comfort: "3", created: date };
+
+            postData(markerFromForm);
 
             //e.latLng.lat() = latitude
             //e.latLng.lng() = longitude
@@ -109,7 +142,11 @@ function initMap() {
 
             var closeBtn = document.getElementsByClassName("gm-ui-hover-effect");
 
+            closeBtn.addEventListener('click', function (e) {
+                console.log("closed");
+            });
 
+            submittedMarkerFxn();
 
             // //Create a marker and placed it on the map.
             // var marker = new google.maps.Marker({
@@ -130,6 +167,12 @@ function initMap() {
     });
 
 }
+
+function submittedMarkerFxn() {
+    var submittedMarker = document.getElementById('submitMarkerForm');
+
+}
+
 
 var ClickEventHandler = function (map, origin) {
     this.origin = origin;
@@ -184,7 +227,23 @@ function drop() {
     }
 }
 
-//TODO: Validate responses
+var locations = [
+    { lat: 35.228, lng: -80.340 },
+    { lat: 35.008, lng: -80.740 },
+    { lat: 35.328, lng: -80.140 },
+    { lat: 35.528, lng: -80.930 },
+    { lat: 35.828, lng: -80.420 },
+    { lat: 35.728, lng: -80.590 },
+    { lat: 35.828, lng: -80.210 },
+    { lat: 35.428, lng: -80.350 },
+    { lat: 35.328, lng: -80.790 },
+    { lat: 35.128, lng: -80.120 },
+    { lat: 35.028, lng: -80.790 },
+    { lat: 35.258, lng: -80.080 },
+    { lat: 35.348, lng: -80.160 },
+    { lat: 35.628, lng: -80.820 },
+]
+
 async function postData(data) {
     // Default options are marked with *
     const response = await fetch(URL, {
