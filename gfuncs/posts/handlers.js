@@ -13,7 +13,7 @@ exports.post = (req,res) => {
 
     // Only allow valid input values
     const lat = data.latitude;
-    const long = data.longitude;
+    const lng = data.longitude;
     const city = data.city;
     const salary = data.salary;
     const happiness = data.happiness;
@@ -29,7 +29,7 @@ exports.post = (req,res) => {
 
     // Create a new firestore collection
     return firestore.collection(COLLECTION_NAME)
-        .add({ created, lat, long, city, salary, happiness, comfort })
+        .add({ created, lat, lng, city, salary, happiness, comfort })
         .then(doc => {
             return res.status(200).send(doc);
         }).catch(err => {
