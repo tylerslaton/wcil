@@ -1,13 +1,17 @@
 var thisIsAPlace = false;
 const URL = "https://us-central1-hopeful-depot-255718.cloudfunctions.net/posts"
+var color;
+var latG;
+var lngG;
 
 function initMap() {
+
+    var geocoder = new google.maps.Geocoder;
 
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 10,
         center: { lat: 35.228, lng: -80.840 }
     });
-
 
     //AJAX INFO NEEDED HERE 
     //MAKE DYNAMIC
@@ -47,7 +51,6 @@ function initMap() {
 
     //Attach click event handler to the map.
     google.maps.event.addListener(map, 'click', function (e) {
-
         //Determine the location where the user has clicked.
         var location = e.latLng;
 
@@ -59,70 +62,48 @@ function initMap() {
 
             var formString =
                 '<div class="ml-3 mr-3" id="form-content">' +
+                '<form onsubmit="return markerFormOut()" >' +
                 '<p><b>Salary</b></p>' +
-                '<div class="form-check form-check-inline">' +
+                '<div class="form-check form-check-inline" id="salaries">' +
                 '<input class="form-check-input" type="radio" name="income" value="$0 - $30,000">' +
-                '<label class="form-check-label" for="income">$0 - $30,000</label>' +
-                '</div>' +
-                '<div class="form-check form-check-inline">' +
+                '<label class="form-check-label mr-2" for="income">$0 - $30,000</label>' +
                 '<input class="form-check-input" type="radio" name="income"  value="$30,001 - $50,000">' +
-                '<label class="form-check-label" for="income">$30,001 - $50,000</label>' +
-                '</div>' +
-                '<div class="form-check form-check-inline">' +
+                '<label class="form-check-label mr-2" for="income">$30,001 - $50,000</label>' +
                 '<input class="form-check-input" type="radio" name="income" value="$50,001 - $80,000" >' +
-                '<label class="form-check-label" for="income">$50,001 - $80,000</label>' +
-                '</div>' +
-                '<div class="form-check form-check-inline">' +
+                '<label class="form-check-label mr-2" for="income">$50,001 - $80,000</label>' +
                 '<input class="form-check-input" type="radio" name="income" value="$80,001 - $100,000" >' +
-                '<label class="form-check-label" for="income">$80,001 - $100,000</label>' +
-                '</div>' +
-                '<div class="form-check form-check-inline">' +
+                '<label class="form-check-label mr-2" for="income">$80,001 - $100,000</label>' +
                 '<input class="form-check-input" type="radio" name="income" value="$100,001+" >' +
-                '<label class="form-check-label" for="income">$100,001+</label>' +
+                '<label class="form-check-label mr-2" for="income">$100,001+</label>' +
                 '</div>' +
                 '<p class="mt-3"><b>Happiness</b></p>' +
-                '<div class="form-check form-check-inline">' +
+                '<div class="form-check form-check-inline" id="happies">' +
                 '<input class="form-check-input" type="radio" name="happiness" value="1">' +
-                '<label class="form-check-label" for="happiness">1</label>' +
-                '</div>' +
-                '<div class="form-check form-check-inline">' +
+                '<label class="form-check-label mr-2" for="happiness">1</label>' +
                 '<input class="form-check-input" type="radio" name="happiness"  value="2">' +
-                '<label class="form-check-label" for="happiness">2</label>' +
-                '</div>' +
-                '<div class="form-check form-check-inline">' +
+                '<label class="form-check-label mr-2" for="happiness">2</label>' +
                 '<input class="form-check-input" type="radio" name="happiness" value="3" >' +
-                '<label class="form-check-label" for="happiness">3</label>' +
-                '</div>' +
-                '<div class="form-check form-check-inline">' +
+                '<label class="form-check-label mr-2" for="happiness">3</label>' +
                 '<input class="form-check-input" type="radio" name="happiness" value="4" >' +
-                '<label class="form-check-label" for="happiness">4</label>' +
-                '</div>' +
-                '<div class="form-check form-check-inline">' +
+                '<label class="form-check-label mr-2" for="happiness">4</label>' +
                 '<input class="form-check-input" type="radio" name="happiness" value="5" >' +
-                '<label class="form-check-label" for="happiness">5</label>' +
+                '<label class="form-check-label mr-2" for="happiness">5</label>' +
                 '</div>' +
                 '<p class="mt-3"><b>Comfiness</b></p>' +
-                '<div class="form-check form-check-inline">' +
+                '<div class="form-check form-check-inline" id="comfies">' +
                 '<input class="form-check-input" type="radio" name="comfy" value="1">' +
-                '<label class="form-check-label" for="comfy">1</label>' +
-                '</div>' +
-                '<div class="form-check form-check-inline">' +
+                '<label class="form-check-label mr-2" for="comfy">1</label>' +
                 '<input class="form-check-input" type="radio" name="comfy" value="2">' +
-                '<label class="form-check-label" for="comfy">2</label>' +
-                '</div>' +
-                '<div class="form-check form-check-inline">' +
+                '<label class="form-check-label mr-2" for="comfy">2</label>' +
                 '<input class="form-check-input" type="radio" name="comfy" value="3" >' +
-                '<label class="form-check-label" for="comfy">3</label>' +
-                '</div>' +
-                '<div class="form-check form-check-inline">' +
+                '<label class="form-check-label mr-2" for="comfy">3</label>' +
                 '<input class="form-check-input" type="radio" name="comfy" value="4" >' +
-                '<label class="form-check-label" for="comfy">4</label>' +
-                '</div>' +
-                '<div class="form-check form-check-inline">' +
+                '<label class="form-check-label mr-2" for="comfy">4</label>' +
                 '<input class="form-check-input" type="radio" name="comfy" value="5" >' +
-                '<label class="form-check-label" for="comfy">5</label>' +
+                '<label class="form-check-label mr-2" for="comfy">5</label>' +
                 '</div>' +
                 '<br/>' +
+<<<<<<< Updated upstream
                 '<div class="text-center"><button onclick="submittedMarkerFxn()" type="submit" id="submitMarkerForm" class="btn btn-primary center-block mt-3 mb-2">Submit</button></div>' +
                 '</div>'
 
@@ -133,43 +114,104 @@ function initMap() {
             //e.latLng.lat() = latitude
             //e.latLng.lng() = longitude
 
+=======
+                '<input type="hidden" id="latV" name="lat" value=' + e.latLng.lat() + '>' +
+                '<input type="hidden" id="lngV" name="lng" value=' + e.latLng.lng() + '>' +
+                '<input type="hidden" id="city" name="city" value="Charlotte">' +
+                '<div class="text-center"><input type="submit" id="submitMarkerForm" class="btn btn-primary center-block mt-3 mb-2"></div>' +
+                '</div>' +
+                '</form>'
+            if (color == 1) {
+                console.log("red");
+            } else if (color == 2) {
+                console.log("blue");
+            }
+            latG = e.latLng.lat();
+            lngG = e.latLng.lng();
+            geocodeLatLng(geocoder, map);
+
+            console.log("COLOR: " + color);
+>>>>>>> Stashed changes
             var infoWindow = new google.maps.InfoWindow({
                 content: formString,
             });
             infoWindow.open(map, marker);
+            // if (marker.open()) {
+            //     console.log("TESt");
+            // }
 
-            // infoWindow.close
+            // if (infoWindow.closeclick()) {
+            //     console.log("TESTCLOSE");
+            // }
             // closeBtn.addEventListener('click', function (e) {
             //     console.log("closed");
             // });
 
-            submittedMarkerFxn();
 
-            // //Create a marker and placed it on the map.
-            // var marker = new google.maps.Marker({
-            //     position: location,
-            //     map: map,
-            //     animation: google.maps.Animation.DROP
-            // });
 
-            // //Attach click event handler to the marker.
-            // google.maps.event.addListener(marker, "click", function (e) {
-            //     var infoWindow = new google.maps.InfoWindow({
-            //         content: formString,
-            //     });
-            //     infoWindow.open(map, marker);
-            // });
+            //Create a marker and placed it on the map.
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                animation: google.maps.Animation.DROP
+            });
+
+            //Attach click event handler to the marker.
+            google.maps.event.addListener(marker, "click", function (e) {
+                infoWindow.close();
+                var contentWindow = new google.maps.InfoWindow({
+                    content: contentString,
+                });
+                contentWindow.open(map, marker);
+            });
         }
         thisIsAPlace = false;
     });
 
 }
 
-function submittedMarkerFxn() {
-    var submittedMarker = document.getElementById('submitMarkerForm');
+function markerFormOut() {
 
+    var lat = document.getElementById("latV").value;
+    var lng = document.getElementById("lngV").value;
+    var city = document.getElementById("city").value;
+    var salaries = $('#salaries input:checked').val();
+    var happies = $('#happies input:checked').val();
+    var comfies = $('#comfies input:checked').val();
+
+    console.log(lat);
+    console.log(lng);
+    console.log(city);
+    console.log(salaries);
+    console.log(happies);
+    console.log(comfies);
+
+    var markerFromForm = { latitude: lat, longitude: lng, city: "Charlotte", salary: salaries, happiness: happies, comfort: comfies };
+
+    postData(markerFromForm);
+
+    color = happies;
+
+    return false;
 }
 
+
+function geocodeLatLng(geocoder, map) {
+    var latlng = { lat: latG, lng: lngG };
+    console.log("HI");
+    geocoder.geocode({ 'location': latlng }, function (results, status) {
+        if (status === 'OK') {
+            if (results[0]) {
+                map.setZoom(11);
+                console.log("TRESATA>? " + results[0].formatted_address);
+            } else {
+                window.alert('No results found');
+            }
+        } else {
+            window.alert('Geocoder failed due to: ' + status);
+        }
+    });
+}
 
 var ClickEventHandler = function (map, origin) {
     this.origin = origin;
