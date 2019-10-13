@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 var thisIsAPlace = false;
-=======
 const URL = "https://us-central1-hopeful-depot-255718.cloudfunctions.net/posts"
->>>>>>> 9cd2623d9106dade83150eee43cabf8256ec1dc9
 
 function initMap() {
 
@@ -209,22 +206,22 @@ async function postData(data) {
 //TODO: Validate responses
 async function initMarkers(city, salary) {
     // TODO: MAKE FREAKING SURE TO SANITIZE ON BACKEND
-    const response = await fetch(URL+"?city="+city+"&salary="+salary, {
+    const response = await fetch(URL + "?city=" + city + "&salary=" + salary, {
         method: 'GET',
     });
     return await response.json(); // parses JSON response into native JavaScript objects
 }
 
 //TODO: Validate responses
-async function updateMarkers(city=null, salary=null, happiness=null, comfort=null){
+async function updateMarkers(city = null, salary = null, happiness = null, comfort = null) {
     const response = await fetch(
-        URL + 
-        "?city=" + city + 
+        URL +
+        "?city=" + city +
         "&salary=" + salary +
         "&happiness=" + happiness +
         "&comfort=" + comfort, {
-            method: 'GET',
-        }
+        method: 'GET',
+    }
     );
     return await response.json();
 }
