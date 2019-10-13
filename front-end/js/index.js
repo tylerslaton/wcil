@@ -46,8 +46,8 @@ async function initMap(newLocations = null) {
         locations = await initMarkers("Charlotte", "$30,001 - $50,000");
     } else {
         locations = newLocations;
-    } 
-    
+    }
+
 
     var markers = locations.map(function (location, i) {
         return new google.maps.Marker({
@@ -197,7 +197,7 @@ function markerFormOut() {
 
     color = happies;
 
-    return false;
+    map.panBy(0, 0);
 }
 
 
@@ -317,7 +317,7 @@ async function updateMarkers(urlParams) {
     await initMap(refineCoords(rawCoords.results));
 }
 
-function refineCoords(rawCoords){
+function refineCoords(rawCoords) {
     const refinedCoords = [];
     console.log(rawCoords)
     for (coord in rawCoords) {
