@@ -18,7 +18,9 @@ exports.post = (req,res) => {
     const salary = data.salary;
     const happiness = data.happiness;
     const comfort = data.comfort;
-    const created = new Date().getTime();
+
+    const today = new Date();
+    const created = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
     // If no data is submitted, don't bother accessing DB
     if (!data) {
