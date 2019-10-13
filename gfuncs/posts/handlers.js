@@ -4,7 +4,7 @@ const COLLECTION_NAME = 'posts';
 const firestore = new Firestore({
     projectId: PROJECTID,
     timestampsInSnapshots: true,
-    keyFilename: "/Users/slaton/.cred/wcil-fae725f5f997.json"
+    //keyFilename: "/Users/slaton/.cred/wcil-fae725f5f997.json"
 });
 
 exports.post = (req,res) => {
@@ -40,49 +40,52 @@ exports.post = (req,res) => {
 
 exports.get = (req,res) => {
 
-  const data = (req.body) || {};
+    const data = (req.query) || {};
 
-  // Only allow valid input values
-  const city = data.city;
-  const salary = data.salary;
-  const happiness = data.happiness;
-  const comfort = data.comfort;
+    // Only allow valid input values
+    const city = data.city;
+    const salary = data.salary;
+    const happiness = data.happiness;
+    const comfort = data.comfort;
 
-  // If no data is submitted, don't bother accessing DB
-  if (!data) {
-      return res.status(200).send();
-  }
-
-  let n = firestore.collection(COLLECTION_NAME)
-
-  if(city !== null){
-    n = n.where('city', '==', city);
-  }
-  if(salary !== null){
-    n = n.where('salary', '==', salary);
-  }
-  if(happiness !== null){
-    n = n.where('', '==', city);
-  }
-  if(comfort !== null){
-    n = n.where('city', '==', city);
-  }
-  n.get()
-    .then(snapshot => {
-      if(snapshot.empty) {
-      console.log("No matching documents.");
-      return res.status(200).send(null);
+    //return res.status(200).send(data);
+    // If no data is submitted, don't bother accessing DB
+    if (!Object.keys(data).length) {
+        return res.status(200).send(JSON.stringify({results: "nothing sent" }));
     }
 
+    let n = firestore.collection(COLLECTION_NAME)
+
+    if(city != undefined){
+        n = n.where('city', '==', city);
+    }
+    if(salary != undefined){
+        n = n.where('salary', '==', salary);
+    }
+    if(happiness != undefined){
+        n = n.where('happiness', '==', happiness);
+    }
+    if(comfort != undefined){
+        n = n.where('comfort', '==', comfort);
+    }
+
+    n.get()
+    .then(snapshot => {
+        if(snapshot.empty) {
+        console.log("No matching documents.");
+        return res.status(200).send(JSON.stringify({results: null}));
+    }
+
+    let list = {results: []};
     snapshot.forEach(doc => {
-      console.log(doc.id, '=>', doc.data());
-      return res.status(200).send(doc);
+        list.results.push(doc.data());
     });
-  })
-  .catch(err => {
-    console.log("Error getting documents", err);
-    return res.status(404).send({error: "unable to match", err});
-  });
+
+    return res.status(200).send(JSON.stringify(list));
+    })
+    .catch(err => {
+    return res.status(500).send({error: "error getting documents", err});
+    });
 
 
-}
+    }

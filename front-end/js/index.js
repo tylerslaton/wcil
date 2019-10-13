@@ -269,15 +269,14 @@ async function initMarkers(city, salary) {
 }
 
 //TODO: Validate responses
-async function updateMarkers(city = null, salary = null, happiness = null, comfort = null) {
-    const response = await fetch(
-        URL +
-        "?city=" + city +
-        "&salary=" + salary +
-        "&happiness=" + happiness +
-        "&comfort=" + comfort, {
-            method: 'GET',
-        }
-    );
+async function updateMarkers(data) {
+    var query = URL + "?"
+    for(var key in data){
+        query += "&" + key + "=" + data[key];
+    }
+
+    console.log(query);
+
+    const response = await fetch(query);
     return await response.json();
 }
