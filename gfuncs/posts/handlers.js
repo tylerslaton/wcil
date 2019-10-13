@@ -8,6 +8,10 @@ const firestore = new Firestore({
 });
 
 exports.post = (req,res) => {
+    //Allow cors
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', 'POST');
+
     // store/insert a new document
     const data = (req.body) || {};
 
@@ -37,5 +41,5 @@ exports.post = (req,res) => {
 }
 
 exports.get = (req,res) => {
-    return "not implemented yet";
+    return res.status(200).send({test:"megatest"});
 }
