@@ -1,3 +1,5 @@
+const URL = "https://us-central1-hopeful-depot-255718.cloudfunctions.net/posts"
+
 function initMap() {
 
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -34,10 +36,10 @@ function initMap() {
     });
 }
 
+//TODO: Validate responses
 async function postData(data) {
-    const url = "https://us-central1-hopeful-depot-255718.cloudfunctions.net/posts";
     // Default options are marked with *
-    const response = await fetch("https://us-central1-hopeful-depot-255718.cloudfunctions.net/posts", {
+    const response = await fetch(URL, {
         headers: { "Content-Type": "application/json; charset=utf-8" },
         method: 'POST',
         body: JSON.stringify({
@@ -46,9 +48,32 @@ async function postData(data) {
             city: data.city,
             salary: data.salary,
             happiness: data.happiness,
-            comfort: data.comfort,
+            comfort: data.comfort
         })
     });
     console.log(response)
     return await response.json(); // parses JSON response into native JavaScript objects
+}
+
+//TODO: Validate responses
+async function initMarkers(city, salary) {
+    // TODO: MAKE FREAKING SURE TO SANITIZE ON BACKEND
+    const response = await fetch(URL+"?city="+city+"&salary="+salary, {
+        method: 'GET',
+    });
+    return await response.json(); // parses JSON response into native JavaScript objects
+}
+
+//TODO: Validate responses
+async function updateMarkers(city=null, salary=null, happiness=null, comfort=null){
+    const response = await fetch(
+        URL + 
+        "?city=" + city + 
+        "&salary=" + salary +
+        "&happiness=" + happiness +
+        "&comfort=" + comfort, {
+            method: 'GET',
+        }
+    );
+    return await response.json();
 }
