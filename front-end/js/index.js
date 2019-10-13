@@ -244,13 +244,12 @@ var locations = [
 ]
 
 async function postData(data) {
-    const url = "https://us-central1-hopeful-depot-255718.cloudfunctions.net/posts";
     // Default options are marked with *
-    const response = await fetch("https://us-central1-hopeful-depot-255718.cloudfunctions.net/posts", {
+    const response = await fetch(URL, {
         headers: { "Content-Type": "application/json; charset=utf-8" },
         method: 'POST',
         body: JSON.stringify({
-            lattitude: data.lattitude,
+            latitude: data.latitude,
             longitude: data.longitude,
             city: data.city,
             salary: data.salary,
@@ -279,8 +278,8 @@ async function updateMarkers(city = null, salary = null, happiness = null, comfo
         "&salary=" + salary +
         "&happiness=" + happiness +
         "&comfort=" + comfort, {
-        method: 'GET',
-    }
+            method: 'GET',
+        }
     );
     return await response.json();
 }
