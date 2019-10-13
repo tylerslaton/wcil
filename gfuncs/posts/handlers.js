@@ -14,7 +14,7 @@ exports.post = (req,res) => {
     // Only allow valid input values
     const lat = data.latitude;
     const lng = data.longitude;
-    const city = data.city;
+    const city = data.city.trim();
     const salary = data.salary;
     const happiness = data.happiness;
     const comfort = data.comfort;
@@ -59,13 +59,13 @@ exports.get = (req,res) => {
     if(city != undefined){
         n = n.where('city', '==', city);
     }
-    if(salary != undefined){
+    if (salary != undefined && salary != "Salary"){
         n = n.where('salary', '==', salary);
     }
-    if(happiness != undefined){
+    if(happiness != undefined && happiness != "Hapiness"){
         n = n.where('happiness', '==', happiness);
     }
-    if(comfort != undefined){
+    if(comfort != undefined && comfort != "Comfort"){
         n = n.where('comfort', '==', comfort);
     }
 

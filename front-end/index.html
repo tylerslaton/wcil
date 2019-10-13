@@ -17,6 +17,40 @@
 
 <body>
   <!-- Start Here -->
+  <header>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="#">#WCYL - Where can <em>you</em> live?</a>
+      <form id="filter-form" class="form-inline">
+        <select class="custom-select mr-4" name="salary">
+          <option disabled selected>Salaries</option>
+          <option value="1">$0-$30,000</option>
+          <option value="2">$30,001-$50,000</option>
+          <option value="3">$50,001-$80,000</option>
+          <option value="4">$80,001-$100,000</option>
+          <option value="5">$100,001+</option>
+        </select>
+        <input class="form-control mr-4" type="text" placeholder="City name..." name="city">
+        </div>
+        <select class="custom-select mr-4" name="comfort">
+          <option disabled selected>Comfort</option>
+          <option value="5">5 😁</option>
+          <option value="4">4 😊</option>
+          <option value="3">3 😐</option>
+          <option value="2">2 😒</option>
+          <option value="1">1 😠</option>
+        </select>
+        <select class="custom-select mr-4" name="happiness">
+          <option disabled selected >Happiness</option>
+          <option value="5">5 😁</option>
+          <option value="4">4 😊</option>
+          <option value="3">3 😐</option>
+          <option value="2">2 😒</option>
+          <option value="1">1 😠</option>
+        </select>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </nav>
+  </header>
   <div id="map"></div>
   <div id="infowindow-content">
     <img id="place-icon" src="" height="16" width="16">

@@ -8,7 +8,7 @@ var gmarkers = {};
 var windows = {};
 var id;
 
-async function initMap() {
+async function initMap(newLocations = null) {
 
     var geocoder = new google.maps.Geocoder;
 
@@ -41,9 +41,12 @@ async function initMap() {
     // create an array of markers based on a given "locations" array.
     // The map() method here has nothing to do with the Google Maps API.
 
-    const locations = await initMarkers(" Kingsport", "$50,001 - $80,000")
-
-    console.log(locations)
+    //Set a logical default
+    if (newLocations == null) {
+        locations = await initMarkers(" Charlotte", "$30,001 - $50,000");
+    } else {
+        locations = newLocations;
+    }
 
     var markers = locations.map(function (location, i) {
         return new google.maps.Marker({
@@ -74,10 +77,10 @@ async function initMap() {
             geocodeLatLng(geocoder, map);
 
             var formString =
-                '<h2 id="form-header">What was your experience here?</h2><hr>' +
                 '<div class="ml-3 mr-3" id="form-content">' +
+                '<h2 id="form-header">What was your experience here?</h2><hr>' +
                 '<form onsubmit="return markerFormOut()" >' +
-                '<p><b>Salary</b></p>' +
+                '<p class="text-large"><b>While making...</b></p>' +
                 '<div class="form-check form-check-inline" id="salaries">' +
                 '<input class="form-check-input" type="radio" name="income" value="$0 - $30,000">' +
                 '<label class="form-check-label mr-2" for="income">$0 - $30,000</label>' +
@@ -90,31 +93,31 @@ async function initMap() {
                 '<input class="form-check-input" type="radio" name="income" value="$100,001+" >' +
                 '<label class="form-check-label mr-2" for="income">$100,001+</label>' +
                 '</div>' +
-                '<p class="mt-3"><b>Happiness</b></p>' +
+                '<p class="mt-3 text-large"><b>I was this happy...</b></p>' +
                 '<div class="form-check form-check-inline" id="happies">' +
                 '<input class="form-check-input" type="radio" name="happiness" value="1">' +
-                '<label class="form-check-label mr-2" for="happiness">1</label>' +
+                '<label class="form-check-label mr-2 text-large" for="happiness">1 😠</label>' +
                 '<input class="form-check-input" type="radio" name="happiness"  value="2">' +
-                '<label class="form-check-label mr-2" for="happiness">2</label>' +
+                '<label class="form-check-label mr-2 text-large" for="happiness">2 😒</label>' +
                 '<input class="form-check-input" type="radio" name="happiness" value="3" >' +
-                '<label class="form-check-label mr-2" for="happiness">3</label>' +
+                '<label class="form-check-label mr-2 text-large" for="happiness">3 😐</label>' +
                 '<input class="form-check-input" type="radio" name="happiness" value="4" >' +
-                '<label class="form-check-label mr-2" for="happiness">4</label>' +
+                '<label class="form-check-label mr-2 text-large" for="happiness">4 😊</label>' +
                 '<input class="form-check-input" type="radio" name="happiness" value="5" >' +
-                '<label class="form-check-label mr-2" for="happiness">5</label>' +
+                '<label class="form-check-label mr-2 text-large" for="happiness">5 😁</label>' +
                 '</div>' +
-                '<p class="mt-3"><b>Comfiness</b></p>' +
+                '<p class="mt-3 text-large"><b>And this comfortable...</b></p>' +
                 '<div class="form-check form-check-inline" id="comfies">' +
                 '<input class="form-check-input" type="radio" name="comfy" value="1">' +
-                '<label class="form-check-label mr-2" for="comfy">1</label>' +
+                '<label class="form-check-label mr-2 text-large" for="comfy">1 😠</label>' +
                 '<input class="form-check-input" type="radio" name="comfy" value="2">' +
-                '<label class="form-check-label mr-2" for="comfy">2</label>' +
+                '<label class="form-check-label mr-2 text-large" for="comfy">2 😒</label>' +
                 '<input class="form-check-input" type="radio" name="comfy" value="3" >' +
-                '<label class="form-check-label mr-2" for="comfy">3</label>' +
+                '<label class="form-check-label mr-2 text-large" for="comfy">3 😐</label>' +
                 '<input class="form-check-input" type="radio" name="comfy" value="4" >' +
-                '<label class="form-check-label mr-2" for="comfy">4</label>' +
+                '<label class="form-check-label mr-2 text-large" for="comfy">4 😊</label>' +
                 '<input class="form-check-input" type="radio" name="comfy" value="5" >' +
-                '<label class="form-check-label mr-2" for="comfy">5</label>' +
+                '<label class="form-check-label mr-2 text-large" for="comfy">5 😁</label>' +
                 '</div>' +
                 '<br/>' +
                 '<input type="hidden" id="latV" name="lat" value=' + e.latLng.lat() + '>' +
@@ -298,6 +301,25 @@ async function initMarkers(city, salary) {
 
     console.log(rawCoords)
 
+    return refineCoords(rawCoords)
+}
+
+//TODO: Validate responses
+async function updateMarkers(urlParams) {
+    var query = URL + urlParams
+
+    console.log(query);
+
+    var rawCoords = await fetch(query);
+    rawCoords = await rawCoords.json();
+
+    console.log(rawCoords)
+
+    locations = refineCoords(rawCoords)
+    initMap();
+}
+
+function refineCoords(rawCoords){
     const refinedCoords = [];
     for (coord in rawCoords) {
 
@@ -308,19 +330,14 @@ async function initMarkers(city, salary) {
             }
         )
     }
-
     return refinedCoords;
 }
 
-//TODO: Validate responses
-async function updateMarkers(data) {
-    var query = URL + "?"
-    for (var key in data) {
-        query += "&" + key + "=" + data[key];
-    }
+$(function () {
+    $('#filter-form').on('submit', function (event) {
+        event.preventDefault(); // This line prevents the normal behaviour of the submit button
+        var queryString = $(this).serialize(); // This will generate a query string like so : "val=1223&val2=434334&val3=4343"
+        updateMarkers("/?" + queryString)
 
-    console.log(query);
-
-    const response = await fetch(query);
-    return await response.json();
-}
+    })
+})
