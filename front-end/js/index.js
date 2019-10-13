@@ -43,7 +43,7 @@ async function initMap(newLocations = null) {
 
     //Set a logical default
     if (newLocations == null) {
-        locations = await initMarkers("Charlotte", "$30,001 - $50,000");
+        locations = await initMarkers("Charlotte", "3");
     } else {
         locations = newLocations;
     }
@@ -83,28 +83,28 @@ async function initMap(newLocations = null) {
                 '<form onsubmit="return markerFormOut()" >' +
                 '<p class="text-large"><b>While making...</b></p>' +
                 '<div class="form-check form-check-inline" id="salaries">' +
-                '<input class="form-check-input" type="radio" name="income" value="$0 - $30,000">' +
+                '<input class="form-check-input" type="radio" name="income" value="1">' +
                 '<label class="form-check-label mr-2" for="income">$0 - $30,000</label>' +
-                '<input class="form-check-input" type="radio" name="income"  value="$30,001 - $50,000">' +
+                '<input class="form-check-input" type="radio" name="income"  value="2">' +
                 '<label class="form-check-label mr-2" for="income">$30,001 - $50,000</label>' +
-                '<input class="form-check-input" type="radio" name="income" value="$50,001 - $80,000" >' +
+                '<input class="form-check-input" type="radio" name="income" value="3" >' +
                 '<label class="form-check-label mr-2" for="income">$50,001 - $80,000</label>' +
-                '<input class="form-check-input" type="radio" name="income" value="$80,001 - $100,000" >' +
+                '<input class="form-check-input" type="radio" name="income" value="4" >' +
                 '<label class="form-check-label mr-2" for="income">$80,001 - $100,000</label>' +
-                '<input class="form-check-input" type="radio" name="income" value="$100,001+" >' +
+                '<input class="form-check-input" type="radio" name="income" value="5" >' +
                 '<label class="form-check-label mr-2" for="income">$100,001+</label>' +
                 '</div>' +
                 '<p class="mt-3 text-large"><b>I was this happy...</b></p>' +
                 '<div class="form-check form-check-inline" id="happies">' +
-                '<input class="form-check-input" type="radio" name="happiness" value="1">' +
+                '<input class="form-check-input" type="radio" name="happiness" value="5">' +
                 '<label class="form-check-label mr-2 text-large" for="happiness">1 😠</label>' +
-                '<input class="form-check-input" type="radio" name="happiness"  value="2">' +
+                '<input class="form-check-input" type="radio" name="happiness"  value="4">' +
                 '<label class="form-check-label mr-2 text-large" for="happiness">2 😒</label>' +
                 '<input class="form-check-input" type="radio" name="happiness" value="3" >' +
                 '<label class="form-check-label mr-2 text-large" for="happiness">3 😐</label>' +
-                '<input class="form-check-input" type="radio" name="happiness" value="4" >' +
+                '<input class="form-check-input" type="radio" name="happiness" value="2" >' +
                 '<label class="form-check-label mr-2 text-large" for="happiness">4 😊</label>' +
-                '<input class="form-check-input" type="radio" name="happiness" value="5" >' +
+                '<input class="form-check-input" type="radio" name="happiness" value="1" >' +
                 '<label class="form-check-label mr-2 text-large" for="happiness">5 😁</label>' +
                 '</div>' +
                 '<p class="mt-3 text-large"><b>And this comfortable...</b></p>' +
