@@ -80,7 +80,7 @@ async function initMap(newLocations = null) {
             var formString =
                 '<div class="ml-3 mr-3" id="form-content">' +
                 '<h2 id="form-header">What was your experience here?</h2><hr>' +
-                '<form onsubmit="return markerFormOut()" >' +
+                '<form onsubmit="markerFormOut(map)" >' +
                 '<p class="text-large"><b>While making...</b></p>' +
                 '<div class="form-check form-check-inline" id="salaries">' +
                 '<input class="form-check-input" type="radio" name="income" value="1">' +
@@ -197,7 +197,7 @@ function markerFormOut() {
 
     color = happies;
 
-    map.panBy(0, 0);
+    google.maps.event.trigger(map, 'resize');
 }
 
 
