@@ -140,11 +140,10 @@ function initMap() {
             });
             infoWindow.open(map, marker);
 
-            var closeBtn = document.getElementsByClassName("gm-ui-hover-effect");
-
-            closeBtn.addEventListener('click', function (e) {
-                console.log("closed");
-            });
+            // infoWindow.close
+            // closeBtn.addEventListener('click', function (e) {
+            //     console.log("closed");
+            // });
 
             submittedMarkerFxn();
 
@@ -245,17 +244,18 @@ var locations = [
 ]
 
 async function postData(data) {
+    const url = "https://us-central1-hopeful-depot-255718.cloudfunctions.net/posts";
     // Default options are marked with *
-    const response = await fetch(URL, {
+    const response = await fetch("https://us-central1-hopeful-depot-255718.cloudfunctions.net/posts", {
         headers: { "Content-Type": "application/json; charset=utf-8" },
         method: 'POST',
         body: JSON.stringify({
-            latitude: data.latitude,
+            lattitude: data.lattitude,
             longitude: data.longitude,
             city: data.city,
             salary: data.salary,
             happiness: data.happiness,
-            comfort: data.comfort
+            comfort: data.comfort,
         })
     });
     console.log(response)
