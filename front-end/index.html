@@ -12,28 +12,67 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="shortcut icon" type="image/png" href="img/world.png" />
 
-  <title>Where Can I?</title>
+  <title>Where Can I Live?</title>
 </head>
 
 <body>
   <!-- Start Here -->
-
+  <header>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="#">#WCYL - Where can <em>you</em> live?</a>
+      <form id="filter-form" class="form-inline">
+        <select class="custom-select mr-4" name="salary">
+          <option disabled selected>Salaries</option>
+          <option value="1">$0-$30,000</option>
+          <option value="2">$30,001-$50,000</option>
+          <option value="3">$50,001-$80,000</option>
+          <option value="4">$80,001-$100,000</option>
+          <option value="5">$100,001+</option>
+        </select>
+        <input class="form-control mr-4" type="text" placeholder="City name..." name="city">
+        </div>
+        <select class="custom-select mr-4" name="comfort">
+          <option disabled selected>Comfort</option>
+          <option value="5">5 😁</option>
+          <option value="4">4 😊</option>
+          <option value="3">3 😐</option>
+          <option value="2">2 😒</option>
+          <option value="1">1 😠</option>
+        </select>
+        <select class="custom-select mr-4" name="happiness">
+          <option disabled selected >Happiness</option>
+          <option value="5">5 😁</option>
+          <option value="4">4 😊</option>
+          <option value="3">3 😐</option>
+          <option value="2">2 😒</option>
+          <option value="1">1 😠</option>
+        </select>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </nav>
+  </header>
   <div id="map"></div>
+  <div id="infowindow-content">
+    <img id="place-icon" src="" height="16" width="16">
+    <span id="place-name" class="title"></span>
+    <br>
+    <span id="place-address"></span>
+  </div>
 
   <script defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU7lcPmlrwwuXKMAYescjsOjCR46KrLVU&callback=initMap">
-  </script>
-  <script src="markerclusterer.js"></script>
-  </script>
+    src="https://maps.googleapis.com/maps/api/js?key=callback=initMap&libraries=places">
+    </script>
+  <script src="js/markerclusterer.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
     integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
     crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
     integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
     crossorigin="anonymous"></script>
-  <script src="index.js"></script>
+  <script src="./js/index.js"></script>
 </body>
 
 </html>
